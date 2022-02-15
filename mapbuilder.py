@@ -18,12 +18,11 @@ print("Application initiated")
 project = QgsProject.instance()
 
 # Build layer from CSV and check validity
-#uri = 'file:///C:\\Users\\codyb\\Documents\\MapProject\\outputWithDupes.csv?delimiter={}&xField={}&yField={}&crs={}'.format(',', 'longitude', 'latitude',{'epsg:4326'})
-uri = 'file:///C:\\Users\\codyb\\Documents\\MapProject\\finalNoDupes.csv?delimiter={}&xField={}&yField={}&crs={}'.format(',', 'longitude', 'latitude',{'epsg:4326'})
+uri = 'file:///C:\\{SOMEDIr}\\MapProject\\finalNoDupes.csv?delimiter={}&xField={}&yField={}&crs={}'.format(',', 'longitude', 'latitude',{'epsg:4326'})
 csvLayer = QgsVectorLayer(uri, 'Locations', 'delimitedtext')
-roadLayer = QgsVectorLayer('C:\\Users\\codyb\\Documents\\MapProject\\shapefiles\\roads\\ne_10m_roads.shp', 'Roads', 'ogr')
-countyLayer = QgsVectorLayer('C:\\Users\\codyb\\Documents\\MapProject\\shapefiles\\counties\\ne_10m_admin_2_counties.shp', 'Counties' ,'ogr')
-stateLayer = QgsVectorLayer('C:\\Users\\codyb\\Documents\\MapProject\\shapefiles\\states\\ne_10m_admin_1_states_provinces.shp', 'States', 'ogr')
+roadLayer = QgsVectorLayer('C:\\{SOMEDIR}\\MapProject\\shapefiles\\roads\\ne_10m_roads.shp', 'Roads', 'ogr')
+countyLayer = QgsVectorLayer('C:\\{SOMEDIR}\\MapProject\\shapefiles\\counties\\ne_10m_admin_2_counties.shp', 'Counties' ,'ogr')
+stateLayer = QgsVectorLayer('C:\\{SOMEDIR}\\MapProject\\shapefiles\\states\\ne_10m_admin_1_states_provinces.shp', 'States', 'ogr')
 
 if csvLayer.isValid():
     print('CSV Layer successfully imported')
@@ -50,6 +49,7 @@ project.addMapLayer(countyLayer)
 
 
 # Building county layer with one renderer before it gets locked below
+# This makes every county transparent before visited counties get added as black below
 
 countyLine = QgsSimpleFillSymbolLayer.create({'outline_color':'0,0,0', 'outline_width':'0.25'})
 countySymbols = countyLayer.renderer().symbol()
@@ -111,7 +111,7 @@ for x, y in enumerate(mapLayers): print('Layer ' + str(x+1) + ': '+ str(y.split(
 # Start image render
 
 render = QgsMapRendererParallelJob(options)
-image_location = 'C:\\Users\\codyb\\Documents\\MapProject\\file.png'
+image_location = 'C:\\{SOMEDIR}\\MapProject\\file.png'
 render.start()
 render.waitForFinished()
 img = render.renderedImage()

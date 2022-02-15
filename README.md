@@ -13,18 +13,3 @@ This is the first finished product based on my personal data! Yours will look a 
 
 Here are some old images I rendered before I got to the final product! It sure was a learning curve doing this for the first time!
 The hardest part was coloring just the counties. I could not find good documentation for it and Stackoverflow was killing my brain at 5AM! I knocked this project out in a single night because "I'll sleep when I finish X. Oh, X was easy. Maybe I'll sleep when I finish Y. Oh, Y....."
-
-
-https://i.imgur.com/HCqJfRV.png - One of the first few successful renders
-
-https://i.imgur.com/6dyG5vm.png - County outlines
-
-https://i.imgur.com/V4URh1o.png - State outlines and new colors
-
-https://i.imgur.com/GZWJpWi.png - All counties colored black, that's not good!
-
-https://i.imgur.com/bEcrxrE.png - Almost final, no counties colored
-
-between these two versions was something like 3 hours
-
-https://i.imgur.com/a19eI8X.png - Final version!

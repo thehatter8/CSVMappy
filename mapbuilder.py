@@ -1,11 +1,9 @@
-from qgis.core import *
-from qgis.gui import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import QSize
-from osgeo import ogr, osr
-import timeit
 import sys
-import os
+import timeit
+
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QColor
+from qgis.core import QgsApplication,QgsProject,QgsMapSettings,QgsVectorLayer,QgsMapRendererParallelJob,QgsSimpleFillSymbolLayer,QgsSymbol,QgsRendererCategory,QgsCategorizedSymbolRenderer,QgsGeometry
 
 start = timeit.default_timer()
 # Initiate Application
@@ -59,20 +57,30 @@ countyLayer.triggerRepaint()
 
 # Finding intersects between CSV and County layers - Takes ~155+ seconds
 
+# Check for points contained within specific counties
+overlaps = []
+alloverlaps = []
+for countyFeature in countyLayer.getFeatures():
+    for pointFeature in csvLayer.getFeatures():
+        if countyFeature.geometry().contains(pointFeature.geometry()):
+            if countyFeature[2] in overlaps:
+                alloverlaps.append(countyFeature[2])
+                continue
+            overlaps.insert(0,countyFeature[2])
+alloverlaps.sort()
+overlap = []
+outs = dict((i, alloverlaps.count(i)) for i in alloverlaps)
+print(outs)
+
+# Paint counties which contain a point from csvLayer
+categories = []
 fni = countyLayer.fields().indexFromName('ADM2_CODE')
 uniquevals = countyLayer.uniqueValues(fni)
-categories = []
-overlaps = []
-for csvFeat in csvLayer.getFeatures():
-    for countyFeat in countyLayer.getFeatures():
-        if csvFeat.geometry().intersects(countyFeat.geometry()):
-            if countyFeat[2] in overlaps: continue
-            overlaps.insert(0, countyFeat[2])
 for uniqueVal in uniquevals:
     if uniqueVal in overlaps:
         symbol = QgsSymbol.defaultSymbol(countyLayer.geometryType())
         layer_style = {}
-        layer_style['color'] = '0, 0, 0'
+        layer_style['color'] = '0, 255, 0'
         symbol_layer = QgsSimpleFillSymbolLayer.create(layer_style)
         if symbol_layer is not None:
             symbol.changeSymbolLayer(0, symbol_layer)

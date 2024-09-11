@@ -1,5 +1,5 @@
 # CSVMappy
-Takes 2 column CSV from my other project (or any with the right setup) and makes a map using QGIS using python libraries,
+Takes 2 column CSV (long,lat) from my GMapsJSONtoCSV project (or any 2 column csv with long,lat) and makes a map using Python and QGIS.
 
 <img src="https://i.imgur.com/mYvV8Y2.png" alt="Completed Map" title="Completed Map">
 
